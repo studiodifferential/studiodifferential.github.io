@@ -1,1 +1,0 @@
-# studiodifferential.github.io
