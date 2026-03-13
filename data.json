@@ -1,0 +1,127 @@
+{
+  "site": {
+    "name": "TonPseudo",
+    "tagline": "Expert Roblox Studio Developer",
+    "description": "Création de systèmes Roblox performants, modulaires et fiables — je donne vie à tes idées de jeu avec une architecture propre et une exécution soignée.",
+    "status": "Disponible pour commissions",
+    "discord": "tonpseudo",
+    "responseTime": "Sous 24h",
+    "nav": ["Projets", "Services", "Contact"]
+  },
+  "stats": [
+    { "value": "50M+", "label": "Visites contribuées" },
+    { "value": "2+", "label": "Années d'expérience" },
+    { "value": "Garanti", "label": "Satisfaction client" }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Système de Donation avec Cutscene",
+      "type": "Commission Payante",
+      "description": "Cutscene animée déclenchée par les donations, avec effets visuels et sons synchronisés.",
+      "tags": ["UI", "Animation", "DataStore"],
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "title": "Système de Mini-Jeux Images",
+      "type": "Commission Payante",
+      "description": "Mini-jeu interactif basé sur la reconnaissance d'images avec scoring temps réel.",
+      "tags": ["Game Mechanics", "UI", "Leaderboard"],
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "title": "Optimisation Système de Monétisation",
+      "type": "Commission Payante",
+      "description": "Refonte et optimisation d'un système de passes et DevProducts existant.",
+      "tags": ["Optimisation", "MonétisATION", "DevProducts"],
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "title": "Catalog Shop + Système UGC Gratuit",
+      "type": "Commission Payante",
+      "description": "Boutique catalogue complète avec distribution automatique d'UGC gratuits.",
+      "tags": ["Catalogue", "UGC", "DataStore"],
+      "status": "completed"
+    },
+    {
+      "id": 5,
+      "title": "Système Multiplates-formes Pression",
+      "type": "Commission Payante",
+      "description": "Mécanisme de plaques de pression multijoueur synchronisé côté serveur.",
+      "tags": ["Multijoueur", "Mécanique", "Serveur"],
+      "status": "completed"
+    },
+    {
+      "id": 6,
+      "title": "Projet en cours",
+      "type": "À venir",
+      "description": "Nouveau projet bientôt disponible.",
+      "tags": [],
+      "status": "coming_soon"
+    }
+  ],
+  "services": [
+    {
+      "icon": "💾",
+      "title": "Data & Sauvegardes",
+      "description": "Leaderboards custom, DataStores, ProfileService et frameworks de sauvegarde/chargement."
+    },
+    {
+      "icon": "🖥️",
+      "title": "UI & Interfaces",
+      "description": "Shops interactifs, menus, notifications et systèmes synchronisés client-serveur."
+    },
+    {
+      "icon": "⚙️",
+      "title": "Mécaniques de Jeu",
+      "description": "Simulateurs, obbies, missions, quêtes, récompenses journalières, systèmes de rounds."
+    },
+    {
+      "icon": "💰",
+      "title": "Trading & Économie",
+      "description": "Trading sécurisé, systèmes de donation, Game Passes et intégration DevProducts."
+    },
+    {
+      "icon": "🎬",
+      "title": "Animations & Cutscenes",
+      "description": "Cutscenes custom, animations joueur et architecture modulaire réutilisable."
+    },
+    {
+      "icon": "🚀",
+      "title": "Optimisation & Scalabilité",
+      "description": "Code efficace et modulaire pour un gameplay fluide quelle que soit la taille du jeu."
+    },
+    {
+      "icon": "🤝",
+      "title": "Projets en Équipe",
+      "description": "Scripting collaboratif, intégration transparente avec votre équipe de développement."
+    },
+    {
+      "icon": "❓",
+      "title": "Autre besoin ?",
+      "description": "Contacte-moi pour discuter de ton projet spécifique et obtenir un devis personnalisé."
+    }
+  ],
+  "contact": {
+    "title": "Construisons quelque chose d'incroyable",
+    "subtitle": "Tu as un projet en tête ? Je serais ravi d'en entendre parler. Remplis le formulaire ou contacte-moi directement sur Discord pour une réponse rapide.",
+    "serviceTypes": [
+      "Data & Sauvegardes",
+      "UI & Interfaces",
+      "Mécaniques de Jeu",
+      "Trading & Économie",
+      "Animations & Cutscenes",
+      "Optimisation",
+      "Projet en Équipe",
+      "Autre"
+    ],
+    "paymentTypes": ["Robux", "PayPal", "Virement bancaire", "Autre"]
+  },
+  "footer": {
+    "year": 2026,
+    "rights": "Tous droits réservés."
+  }
+}

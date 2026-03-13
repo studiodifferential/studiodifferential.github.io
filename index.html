@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TonPseudo | Expert Roblox Studio Scripter</title>
+  <meta name="description" content="Portfolio de développement Roblox Studio — systèmes LuaU performants et modulaires." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════ -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#" class="navbar__logo">TonPseudo</a>
+
+      <nav class="navbar__links" id="navLinks">
+        <a href="#projets">Projets</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="#contact" class="btn btn--primary navbar__cta">Me Contacter</a>
+
+      <button class="navbar__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════ -->
+    <section class="hero" id="accueil">
+      <div class="hero__bg-grid"></div>
+      <div class="hero__glow"></div>
+
+      <div class="container hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Disponible pour commissions
+        </div>
+
+        <h1 class="hero__title">
+          <span class="hero__title--white">Ton</span><span class="hero__title--green">Pseudo</span>
+        </h1>
+        <p class="hero__subtitle">Expert <span class="text-green">LuaU</span> Scripter</p>
+        <p class="hero__desc">
+          Création de systèmes Roblox performants, modulaires et fiables — je donne vie à tes idées de jeu avec une architecture propre et une exécution soignée.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#projets" class="btn btn--primary btn--lg">Voir mes Projets <span class="btn__arrow">→</span></a>
+          <a href="#contact" class="btn btn--ghost btn--lg">Me Contacter</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero__stats">
+          <div class="stat-card">
+            <span class="stat-card__value" data-target="50" data-suffix="M+">0M+</span>
+            <span class="stat-card__label">Visites contribuées</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__value" data-target="2" data-suffix="+">0+</span>
+            <span class="stat-card__label">Années d'expérience</span>
+          </div>
+          <div class="stat-card stat-card--accent">
+            <span class="stat-card__value">Garanti</span>
+            <span class="stat-card__label">Satisfaction client</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PROJETS
+    ══════════════════════════════════════════════ -->
+    <section class="section" id="projets">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Portfolio</span>
+          <h2 class="section__title">Projets Sélectionnés</h2>
+          <p class="section__desc">Scripts Roblox avancés axés sur la performance, la modularité et des systèmes prêts pour la production.</p>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+          <!-- Les cartes sont injectées par main.js depuis data.json -->
+        </div>
+
+        <div class="section__footer">
+          <button class="btn btn--ghost" id="loadMoreBtn">Charger plus</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SERVICES
+    ══════════════════════════════════════════════ -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Ce que je propose</span>
+          <h2 class="section__title">Services</h2>
+          <p class="section__desc">Services de scripting Roblox professionnels, adaptés pour donner vie à tes idées de jeu.</p>
+        </div>
+
+        <div class="services-grid" id="servicesGrid">
+          <!-- Injecté par main.js -->
+        </div>
+
+        <!-- CTA bannière -->
+        <div class="services-cta">
+          <div class="services-cta__inner">
+            <h3 class="services-cta__title">Prêt à démarrer ton projet ?</h3>
+            <p class="services-cta__text">Le tarif varie selon la portée et la complexité du projet. Contacte-moi pour un devis personnalisé.</p>
+            <a href="#contact" class="btn btn--primary btn--lg">Demander un devis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         CONTACT
+    ══════════════════════════════════════════════ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Me contacter</span>
+          <h2 class="section__title">Construisons quelque chose d'incroyable</h2>
+          <p class="section__desc">Tu as un projet en tête ? Remplis le formulaire ou contacte-moi directement sur Discord.</p>
+        </div>
+
+        <div class="contact-layout">
+
+          <!-- Infos -->
+          <aside class="contact-info">
+            <div class="contact-info__card">
+              <div class="contact-info__icon">💬</div>
+              <div>
+                <h4 class="contact-info__heading">Discord</h4>
+                <p class="contact-info__value text-green">tonpseudo</p>
+                <p class="contact-info__note">Réponse la plus rapide</p>
+              </div>
+            </div>
+            <div class="contact-info__card">
+              <div class="contact-info__icon">⏱️</div>
+              <div>
+                <h4 class="contact-info__heading">Temps de réponse</h4>
+                <p class="contact-info__value">Sous 24h</p>
+                <p class="contact-info__note">Généralement bien plus rapide</p>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Formulaire -->
+          <div class="contact-form-wrapper">
+            <form class="contact-form" id="contactForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="name">Nom</label>
+                  <input class="form-input" type="text" id="name" name="name" placeholder="Ton nom" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="discord">Pseudo Discord</label>
+                  <input class="form-input" type="text" id="discord" name="discord" placeholder="pseudo#0000" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">Email <span class="form-optional">(optionnel)</span></label>
+                <input class="form-input" type="email" id="email" name="email" placeholder="tonemail@exemple.com" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="serviceType">Type de service</label>
+                  <select class="form-input form-select" id="serviceType" name="serviceType">
+                    <option value="" disabled selected>Choisis un service</option>
+                    <!-- Injecté par main.js -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="paymentType">Mode de paiement</label>
+                  <select class="form-input form-select" id="paymentType" name="paymentType">
+                    <option value="" disabled selected>Choisis un mode</option>
+                    <!-- Injecté par main.js -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="budget">Budget estimé <span class="form-optional">(optionnel)</span></label>
+                <div class="form-input-prefix">
+                  <span class="form-prefix">$</span>
+                  <input class="form-input form-input--prefixed" type="number" id="budget" name="budget" placeholder="0" min="0" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="details">Détails du projet</label>
+                <textarea class="form-input form-textarea" id="details" name="details" rows="5" placeholder="Décris ton projet en détail..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--lg btn--full">
+                Envoyer le message <span class="btn__arrow">→</span>
+              </button>
+
+              <p class="form-success" id="formSuccess">✅ Message envoyé ! Je reviens vers toi très vite.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#" class="footer__logo">TonPseudo</a>
+      <nav class="footer__nav">
+        <a href="#projets">Projets</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer__copy">© 2026 TonPseudo. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
