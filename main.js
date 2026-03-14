@@ -20,28 +20,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ctx = fogCanvas.getContext('2d');
     let W, H, blobs, animId;
 
+    // Palettes de couleurs : violet, indigo, rose, bleu-violet
+    const PALETTES = [
+      { hue: 265, sat: 85 },  // violet vif
+      { hue: 280, sat: 75 },  // violet-rose
+      { hue: 245, sat: 80 },  // indigo
+      { hue: 300, sat: 70 },  // magenta doux
+      { hue: 220, sat: 70 },  // bleu-violet
+      { hue: 310, sat: 65 },  // rose-violet
+    ];
+
     function createBlobs() {
-      blobs = Array.from({ length: 18 }, (_, i) => ({
-        x:     Math.random() * W,
-        y:     Math.random() * H,
-        rx:    W  * (0.20 + Math.random() * 0.30),
-        ry:    H  * (0.14 + Math.random() * 0.22),
-        // vitesse de base + une composante sinusoïdale pour un mouvement organique
-        vx:    (Math.random() - 0.5) * 0.45,
-        vy:    (Math.random() - 0.5) * 0.28,
-        // amplitude du mouvement ondulatoire
-        swayAmp:  30 + Math.random() * 60,
-        swayFreq: 0.00015 + Math.random() * 0.00020,
-        swayOff:  Math.random() * Math.PI * 2,
-        a:     0.045 + Math.random() * 0.07,
-        phase: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.0003 + Math.random() * 0.0005,
-        hue:   255 + Math.random() * 60,
-        sat:   65  + Math.random() * 30,
-        // position de base pour le sway
-        baseX: Math.random() * W,
-        baseY: Math.random() * H,
-      }));
+      blobs = Array.from({ length: 22 }, (_, i) => {
+        const pal = PALETTES[i % PALETTES.length];
+        return {
+          baseX:     Math.random() * W,
+          baseY:     Math.random() * H,
+          rx:        W  * (0.22 + Math.random() * 0.32),
+          ry:        H  * (0.16 + Math.random() * 0.24),
+          // dérive principale
+          vx:        (Math.random() - 0.5) * 0.55,
+          vy:        (Math.random() - 0.5) * 0.35,
+          // ondulation primaire
+          swayAmpX:  40 + Math.random() * 80,
+          swayAmpY:  20 + Math.random() * 50,
+          swayFreq:  0.00018 + Math.random() * 0.00022,
+          swayOff:   Math.random() * Math.PI * 2,
+          // ondulation secondaire (turbulence)
+          turbAmp:   15 + Math.random() * 30,
+          turbFreq:  0.00045 + Math.random() * 0.00060,
+          turbOff:   Math.random() * Math.PI * 2,
+          // opacité
+          a:         0.06 + Math.random() * 0.09,
+          phase:     Math.random() * Math.PI * 2,
+          pulseSpd:  0.00025 + Math.random() * 0.00045,
+          // couleur
+          hue:       pal.hue + (Math.random() - 0.5) * 20,
+          sat:       pal.sat + (Math.random() - 0.5) * 15,
+        };
+      });
     }
 
     function resize() {
@@ -55,28 +72,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       ctx.clearRect(0, 0, W, H);
 
       blobs.forEach(b => {
-        // Dérive de base
+        // Dérive
         b.baseX += b.vx;
         b.baseY += b.vy;
-
-        // Wrap autour
         if (b.baseX < -b.rx) b.baseX = W + b.rx;
         if (b.baseX >  W + b.rx) b.baseX = -b.rx;
         if (b.baseY < -b.ry) b.baseY = H + b.ry;
         if (b.baseY >  H + b.ry) b.baseY = -b.ry;
 
-        // Mouvement ondulatoire par-dessus la dérive
-        const cx = b.baseX + Math.sin(ts * b.swayFreq + b.swayOff) * b.swayAmp;
-        const cy = b.baseY + Math.cos(ts * b.swayFreq * 0.7 + b.swayOff) * (b.swayAmp * 0.5);
+        // Position finale = dérive + ondulation + turbulence
+        const cx = b.baseX
+          + Math.sin(ts * b.swayFreq + b.swayOff) * b.swayAmpX
+          + Math.sin(ts * b.turbFreq + b.turbOff) * b.turbAmp;
+        const cy = b.baseY
+          + Math.cos(ts * b.swayFreq * 0.65 + b.swayOff) * b.swayAmpY
+          + Math.cos(ts * b.turbFreq * 1.3  + b.turbOff) * (b.turbAmp * 0.6);
 
-        // Pulsation d'opacité
-        const alpha = b.a * (0.45 + 0.55 * Math.sin(ts * b.pulseSpeed + b.phase));
+        // Pulsation
+        const alpha = b.a * (0.4 + 0.6 * Math.sin(ts * b.pulseSpd + b.phase));
 
+        // Dégradé 5 stops pour une brume très diffuse
         const r = Math.max(b.rx, b.ry);
         const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        grd.addColorStop(0,    `hsla(${b.hue}, ${b.sat}%, 70%, ${alpha})`);
-        grd.addColorStop(0.4,  `hsla(${b.hue}, ${b.sat}%, 50%, ${alpha * 0.55})`);
-        grd.addColorStop(0.75, `hsla(${b.hue}, ${b.sat}%, 35%, ${alpha * 0.18})`);
+        grd.addColorStop(0,    `hsla(${b.hue}, ${b.sat}%, 72%, ${alpha})`);
+        grd.addColorStop(0.25, `hsla(${b.hue}, ${b.sat}%, 60%, ${alpha * 0.7})`);
+        grd.addColorStop(0.55, `hsla(${b.hue}, ${b.sat}%, 45%, ${alpha * 0.35})`);
+        grd.addColorStop(0.80, `hsla(${b.hue}, ${b.sat}%, 30%, ${alpha * 0.10})`);
         grd.addColorStop(1,    `hsla(${b.hue}, ${b.sat}%, 20%, 0)`);
 
         ctx.save();
