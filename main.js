@@ -119,85 +119,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     animId = requestAnimationFrame(draw);
   }
 
-  // ── Petites boules flottantes (background) ───
-  const orbCanvas = document.getElementById('orbsBg');
-  if (orbCanvas) {
-    const oCtx = orbCanvas.getContext('2d');
-    let oW, oH, orbs;
-
-    const ORB_COUNT = 35;
-    const COLORS = [
-      { h: 210, s: 70 },  // bleu
-      { h: 220, s: 65 },  // bleu-indigo
-      { h: 200, s: 60 },  // bleu clair
-      { h: 230, s: 55 },  // indigo doux
-    ];
-
-    function createOrbs() {
-      orbs = Array.from({ length: ORB_COUNT }, () => {
-        const c = COLORS[Math.floor(Math.random() * COLORS.length)];
-        return {
-          x:  Math.random() * oW,
-          y:  Math.random() * oH,
-          r:  2 + Math.random() * 3.5,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          h:  c.h + (Math.random() - 0.5) * 20,
-          s:  c.s,
-          a:  0.3 + Math.random() * 0.45,
-        };
-      });
-    }
-
-    function resizeOrbs() {
-      oW = orbCanvas.width  = window.innerWidth;
-      oH = orbCanvas.height = window.innerHeight;
-      createOrbs();
-    }
-
-    function getVfxBounds() {
-      const el = document.getElementById('vfx');
-      if (!el) return null;
-      const r = el.getBoundingClientRect();
-      return { top: r.top, bottom: r.bottom };
-    }
-
-    function drawOrbs() {
-      oCtx.clearRect(0, 0, oW, oH);
-      const vfx = getVfxBounds();
-
-      orbs.forEach(o => {
-        // déplacement
-        o.x += o.vx;
-        o.y += o.vy;
-        if (o.x < -o.r)       o.x = oW + o.r;
-        if (o.x > oW + o.r)   o.x = -o.r;
-        if (o.y < -o.r)       o.y = oH + o.r;
-        if (o.y > oH + o.r)   o.y = -o.r;
-
-        // masquer dans la zone VFX
-        if (vfx && o.y + o.r > vfx.top && o.y - o.r < vfx.bottom) return;
-
-        // dégradé radial doux
-        const grd = oCtx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
-        grd.addColorStop(0,   `hsla(${o.h}, ${o.s}%, 75%, ${o.a})`);
-        grd.addColorStop(0.6, `hsla(${o.h}, ${o.s}%, 55%, ${o.a * 0.5})`);
-        grd.addColorStop(1,   `hsla(${o.h}, ${o.s}%, 40%, 0)`);
-
-        oCtx.beginPath();
-        oCtx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
-        oCtx.fillStyle = grd;
-        oCtx.fill();
-      });
-
-      requestAnimationFrame(drawOrbs);
-    }
-
-    resizeOrbs();
-    window.addEventListener('resize', resizeOrbs);
-    drawOrbs();
-  }
-
   // ── Transition fond VFX au scroll ────────────
   const vfxSection = document.getElementById('vfx');
   if (vfxSection) {
@@ -323,8 +244,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     paymentTypeEl?.appendChild(opt);
   });
 
-  // ── Form submit — TODO: add Discord Webhook URL ──
-  // const WEBHOOK = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+  // ── Form submit — Discord Webhook ────────────
+  const WEBHOOK = 'https://discord.com/api/webhooks/1482488450811822332/IEoHkgT5PAIPcmDbL3lDBvDMO2yK0gHM4YQzs18KWHDI7EXoayMTcqh_W40bodgNrX8y';
 
   const form        = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
@@ -332,10 +253,66 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   form?.addEventListener('submit', async e => {
     e.preventDefault();
-    formSuccess.textContent = '⚠️ Contact form coming soon. Please reach out on Discord directly.';
-    formSuccess.style.color = '#6aa8e0';
-    formSuccess?.classList.add('visible');
-    setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+
+    const d = Object.fromEntries(new FormData(form));
+
+    // Bouton en état de chargement
+    if (submitBtn) {
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Sending…';
+    }
+
+    // Construction du message Discord embed
+    const payload = {
+      username: 'differential studio — Contact',
+      avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+      embeds: [{
+        title: '📬 New Commission Request',
+        color: 0x6aa8e0,
+        fields: [
+          { name: '👤 Name',           value: d.name        || '—', inline: true  },
+          { name: '💬 Discord',        value: d.discord     || '—', inline: true  },
+          { name: '📧 Email',          value: d.email       || '—', inline: true  },
+          { name: '🔧 Service',        value: d.serviceType || '—', inline: true  },
+          { name: '💳 Payment',        value: d.paymentType || '—', inline: true  },
+          { name: '💰 Budget',         value: d.budget ? `$${d.budget}` : '—', inline: true },
+          { name: '📝 Project Details',value: d.details     || '—', inline: false },
+        ],
+        footer: { text: 'differential studio — portfolio contact form' },
+        timestamp: new Date().toISOString(),
+      }]
+    };
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        formSuccess.textContent = '✅ Message sent! I will get back to you very soon.';
+        formSuccess.style.color = '#6aa8e0';
+        formSuccess?.classList.add('visible');
+        form.reset();
+        setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+      } else {
+        formSuccess.textContent = '❌ Something went wrong. Please reach out on Discord directly.';
+        formSuccess.style.color = '#e07070';
+        formSuccess?.classList.add('visible');
+        setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+      }
+    } catch (err) {
+      formSuccess.textContent = '❌ Network error. Please reach out on Discord directly.';
+      formSuccess.style.color = '#e07070';
+      formSuccess?.classList.add('visible');
+      setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Send Message →';
+      }
+    }
   });
 
   // ── Animated stat counters ────────────────────
