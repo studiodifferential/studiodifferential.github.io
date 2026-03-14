@@ -65,34 +65,42 @@
   ],
   "services": [
     {
+      "icon": "database",
       "title": "Data & Save Systems",
       "description": "Custom leaderboards, DataStores, ProfileService, and save/load frameworks."
     },
     {
+      "icon": "layout-dashboard",
       "title": "UI & Interfaces",
       "description": "Interactive UI stores, menus, notifications, and client-server synced systems."
     },
     {
+      "icon": "gamepad-2",
       "title": "Game Mechanics",
       "description": "Simulators, obbies, missions, quests, daily rewards, round & voting systems."
     },
     {
+      "icon": "coins",
       "title": "Trading & Economy",
       "description": "Secure trading, donation systems, Game Passes, and DevProducts integration."
     },
     {
+      "icon": "clapperboard",
       "title": "Animations & Cutscenes",
       "description": "Custom cutscenes, player animations, and modular, reusable architecture."
     },
     {
+      "icon": "zap",
       "title": "Optimization & Scalability",
       "description": "Efficient, modular code to ensure smooth gameplay for any game size or player count."
     },
     {
+      "icon": "users",
       "title": "Team Projects",
       "description": "Collaborative scripting, integrating seamlessly with your existing development team."
     },
     {
+      "icon": "message-circle-question",
       "title": "Other",
       "description": "Have a specific need? Reach out and I will put together a custom quote for your project."
     }

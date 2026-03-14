@@ -73,19 +73,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderProjects();
   });
 
-  // ── Services ──────────────────────────────────
+  // ── Services (avec icônes Lucide) ─────────────
   const servicesGrid = document.getElementById('servicesGrid');
   if (servicesGrid) {
     data.services.forEach((s, i) => {
       const card = document.createElement('div');
       card.className = 'service-card';
       card.innerHTML = `
-        <span class="service-card__index">0${i + 1}</span>
+        <div class="service-card__icon">
+          <i data-lucide="${s.icon}"></i>
+        </div>
         <h3 class="service-card__title">${s.title}</h3>
         <p class="service-card__desc">${s.description}</p>
       `;
       servicesGrid.appendChild(card);
     });
+
+    // Initialise toutes les icônes Lucide injectées dynamiquement
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   }
 
   // ── Form selects ──────────────────────────────
