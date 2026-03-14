@@ -713,9 +713,11 @@ a   { text-decoration: none; color: inherit; }
 /* ── Grille vidéos YouTube ── */
 .vfx-videos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-bottom: 24px;
+}
+.vfx-videos--3col {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .vfx-video-card {
@@ -919,17 +921,6 @@ a   { text-decoration: none; color: inherit; }
 /* ═══════════════════════════════════════════════
    TRANSITIONS ENTRE SECTIONS
 ══════════════════════════════════════════════ */
-
-/* Services (--alt) → VFX : fondu bas vers noir violacé */
-.section--alt::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 140px;
-  background: linear-gradient(to bottom, transparent, #06020f);
-  pointer-events: none;
-  z-index: 2;
-}
 
 /* VFX : fondu entrant en haut depuis le noir */
 .section--vfx .vfx__fade-top {
