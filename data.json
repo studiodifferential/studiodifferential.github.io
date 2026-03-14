@@ -6,7 +6,7 @@
     "status": "Available for commissions",
     "discord": "differentialstudio",
     "responseTime": "Within 24h",
-    "nav": ["Work", "Services", "Contact"]
+    "nav": ["Work", "Services", "VFX", "Contact"]
   },
   "stats": [
     { "value": "50M+", "label": "Contributed Visits" },
@@ -105,6 +105,38 @@
       "description": "Have a specific need? Reach out and I will put together a custom quote for your project."
     }
   ],
+  "vfx": [
+    {
+      "icon": "sparkles",
+      "title": "Particle Systems",
+      "description": "Custom Roblox particle emitters — fire, smoke, magic, explosions and more, fully optimized for performance."
+    },
+    {
+      "icon": "wand-2",
+      "title": "Spell & Ability Effects",
+      "description": "Visually stunning skill effects, hit impacts, and ability activations for combat and RPG games."
+    },
+    {
+      "icon": "sun",
+      "title": "Environmental VFX",
+      "description": "Ambient atmosphere effects — weather, fog, rain, god rays, and dynamic lighting setups."
+    },
+    {
+      "icon": "monitor-play",
+      "title": "Screen Effects",
+      "description": "Post-processing blur, color grading, vignette, and full-screen transitions for cinematic moments."
+    },
+    {
+      "icon": "flame",
+      "title": "Destruction & Impact",
+      "description": "Explosions, shockwaves, debris, and destruction effects that sell the weight of every hit."
+    },
+    {
+      "icon": "layers",
+      "title": "UI VFX",
+      "description": "Animated glows, shimmer effects, and particle overlays to make your UI feel alive and premium."
+    }
+  ],
   "contact": {
     "title": "Let's Build Something Amazing",
     "subtitle": "Have a project in mind? Fill out the form or reach out directly on Discord for a faster response.",
@@ -115,6 +147,7 @@
       "Trading & Economy",
       "Animations & Cutscenes",
       "Optimization",
+      "VFX",
       "Team Project",
       "Other"
     ],

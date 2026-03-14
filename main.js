@@ -73,6 +73,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderProjects();
   });
 
+  // ── VFX ───────────────────────────────────────
+  const vfxGrid = document.getElementById('vfxGrid');
+  if (vfxGrid && data.vfx) {
+    data.vfx.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'vfx-card';
+      card.innerHTML = `
+        <div class="vfx-card__icon">
+          <i data-lucide="${v.icon}"></i>
+        </div>
+        <h3 class="vfx-card__title">${v.title}</h3>
+        <p class="vfx-card__desc">${v.description}</p>
+      `;
+      vfxGrid.appendChild(card);
+    });
+  }
+
   // ── Services (avec icônes Lucide) ─────────────
   const servicesGrid = document.getElementById('servicesGrid');
   if (servicesGrid) {
