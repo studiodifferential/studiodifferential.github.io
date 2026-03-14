@@ -14,6 +14,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  // ── Transition fond VFX au scroll ────────────
+  const vfxSection = document.getElementById('vfx');
+  if (vfxSection) {
+    const vfxObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        vfxSection.classList.toggle('vfx--visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+    vfxObserver.observe(vfxSection);
+  }
+
   // ── Navbar on scroll ──────────────────────────
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

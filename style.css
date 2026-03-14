@@ -631,42 +631,113 @@ a   { text-decoration: none; color: inherit; }
    VFX SECTION — Thème violet
 ══════════════════════════════════════════════ */
 .section--vfx {
-  background: #020008;
   position: relative;
   overflow: hidden;
+  /* Transition fond noir → violet au scroll via JS */
+  background: #000000;
+  transition: background 0.8s ease;
+}
+.section--vfx.vfx--visible {
+  background: #06020f;
 }
 
-/* Halo violet en fond */
+/* Halo violet en fond — transition d'opacité */
 .vfx__glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1000px;
-  height: 800px;
+  width: 1100px;
+  height: 900px;
   background: radial-gradient(
     ellipse 70% 60% at 50% 50%,
-    rgba(120, 60, 220, 0.10) 0%,
-    rgba(90, 40, 180, 0.05) 45%,
+    rgba(150, 90, 255, 0.14) 0%,
+    rgba(120, 60, 220, 0.07) 45%,
     transparent 70%
   );
   pointer-events: none;
   z-index: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.section--vfx.vfx--visible .vfx__glow {
+  opacity: 1;
 }
 
 .section--vfx .container { position: relative; z-index: 1; }
 
-/* Label violet */
+/* Label violet éclairci */
 .section__label--vfx {
-  color: #9d6ee0;
+  color: #b08af0;
 }
 
-/* Titre dégradé violet */
+/* Titre dégradé violet éclairci */
 .section__title--vfx {
-  background: linear-gradient(120deg, #ffffff 0%, #c8a8ff 50%, #8050e0 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #ddc8ff 50%, #a070f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ── Grille vidéos YouTube ── */
+.vfx-videos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.vfx-video-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid rgba(160, 100, 255, 0.14);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #09061a;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.vfx-video-card:hover {
+  border-color: rgba(160, 100, 255, 0.55);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0  0  1px rgba(160, 100, 255, 0.22),
+    0 0 24px    rgba(130, 70, 240, 0.18),
+    0 8px 32px  rgba(0, 0, 0, 0.70);
+}
+
+/* Wrapper 16:9 pour l'iframe */
+.vfx-video-card__embed {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: #050010;
+}
+.vfx-video-card__embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.vfx-video-card__label {
+  padding: 10px 16px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #c4a8f0;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Séparateur entre vidéos et cartes */
+.vfx-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(160, 100, 255, 0.20), transparent);
+  margin: 52px 0 52px;
 }
 
 /* Grille VFX — 3 colonnes */
@@ -679,8 +750,8 @@ a   { text-decoration: none; color: inherit; }
 
 /* Carte VFX */
 .vfx-card {
-  background: #0a0812;
-  border: 1px solid rgba(140, 80, 220, 0.12);
+  background: #09061a;
+  border: 1px solid rgba(160, 100, 255, 0.12);
   border-radius: var(--radius);
   padding: 32px 28px;
   display: flex;
@@ -690,17 +761,17 @@ a   { text-decoration: none; color: inherit; }
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
 .vfx-card:hover {
-  border-color: rgba(140, 80, 220, 0.60);
+  border-color: rgba(160, 100, 255, 0.60);
   background:
-    radial-gradient(ellipse 100% 80% at 50% 110%, rgba(100, 40, 200, 0.16) 0%, rgba(80, 30, 160, 0.06) 50%, transparent 70%),
-    #0e0a16;
+    radial-gradient(ellipse 100% 80% at 50% 110%, rgba(120, 60, 230, 0.16) 0%, rgba(100, 40, 190, 0.06) 50%, transparent 70%),
+    #100c20;
   transform: translateY(-5px) scale(1.01);
   box-shadow:
-    0 0  0  1px rgba(140, 80, 220, 0.25),
-    0 0 24px    rgba(110, 60, 210, 0.18),
-    0 0 48px    rgba(90,  40, 190, 0.08),
+    0 0  0  1px rgba(160, 100, 255, 0.25),
+    0 0 24px    rgba(130, 70, 240, 0.18),
+    0 0 48px    rgba(110, 50, 210, 0.08),
     0 8px 40px  rgba(0, 0, 0, 0.70),
-    inset 0 0 32px rgba(100, 40, 200, 0.08);
+    inset 0 0 32px rgba(120, 60, 220, 0.08);
 }
 
 /* Icône VFX */
@@ -708,8 +779,8 @@ a   { text-decoration: none; color: inherit; }
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(120, 60, 210, 0.10);
-  border: 1px solid rgba(120, 60, 210, 0.20);
+  background: rgba(150, 90, 240, 0.10);
+  border: 1px solid rgba(150, 90, 240, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -719,20 +790,20 @@ a   { text-decoration: none; color: inherit; }
 .vfx-card__icon svg {
   width: 18px;
   height: 18px;
-  stroke: #9d6ee0;
+  stroke: #b08af0;
   stroke-width: 1.8;
   transition: stroke var(--transition), transform var(--transition);
 }
 .vfx-card:hover .vfx-card__icon {
-  background: rgba(120, 60, 210, 0.20);
-  border-color: rgba(140, 80, 220, 0.55);
+  background: rgba(150, 90, 240, 0.20);
+  border-color: rgba(160, 100, 255, 0.55);
   transform: scale(1.12);
   box-shadow:
-    0 0 12px rgba(120, 60, 220, 0.28),
-    0 0 28px rgba(100, 40, 200, 0.14);
+    0 0 12px rgba(150, 90, 250, 0.30),
+    0 0 28px rgba(130, 60, 230, 0.15);
 }
 .vfx-card:hover .vfx-card__icon svg {
-  stroke: #c4a0f8;
+  stroke: #d4baff;
   transform: scale(1.10);
 }
 
@@ -744,32 +815,32 @@ a   { text-decoration: none; color: inherit; }
   transition: color var(--transition);
 }
 .vfx-card:hover .vfx-card__title {
-  color: #b88af0;
+  color: #c4a0ff;
 }
 
 .vfx-card__desc {
   font-size: 0.875rem;
-  color: #6a5880;
+  color: #6a5888;
   line-height: 1.65;
 }
 
 /* CTA VFX — violet */
 .vfx-cta {
-  border-color: rgba(120, 60, 210, 0.20);
-  background: #0a0812;
+  border-color: rgba(150, 90, 240, 0.20);
+  background: #09061a;
 }
 
 .services-cta__title--vfx {
-  background: linear-gradient(120deg, #ffffff 0%, #c8a8ff 50%, #8050e0 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #ddc8ff 50%, #a070f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Bouton VFX violet */
+/* Bouton VFX violet éclairci */
 .btn--vfx {
-  background: linear-gradient(135deg, #c8a8ff 0%, #8050e0 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, #ddc8ff 0%, #a070f0 100%);
+  color: #0a0012;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -784,8 +855,8 @@ a   { text-decoration: none; color: inherit; }
   padding: 14px 28px;
 }
 .btn--vfx:hover {
-  background: linear-gradient(135deg, #ddc4ff 0%, #9d6ee0 100%);
-  box-shadow: 0 0 32px rgba(140, 80, 220, 0.40);
+  background: linear-gradient(135deg, #eedeff 0%, #b88af8 100%);
+  box-shadow: 0 0 32px rgba(160, 100, 255, 0.40);
   transform: translateY(-2px);
 }
 
@@ -795,8 +866,8 @@ a   { text-decoration: none; color: inherit; }
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(140, 80, 220, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(140, 80, 220, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(160, 100, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(160, 100, 255, 0.04) 1px, transparent 1px);
   background-size: 90px 90px;
   mask-image: radial-gradient(
     ellipse 70% 65% at 50% 40%,
@@ -807,6 +878,11 @@ a   { text-decoration: none; color: inherit; }
   );
   pointer-events: none;
   z-index: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.section--vfx.vfx--visible::before {
+  opacity: 1;
 }
 
 /* ═══════════════════════════════════════════════
@@ -1022,6 +1098,7 @@ a   { text-decoration: none; color: inherit; }
   .contact-info__card { flex: 1; min-width: 200px; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .vfx-grid { grid-template-columns: repeat(2, 1fr); }
+  .vfx-videos { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 680px) {
@@ -1044,6 +1121,7 @@ a   { text-decoration: none; color: inherit; }
   .form-row { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .vfx-grid { grid-template-columns: 1fr; }
+  .vfx-videos { grid-template-columns: 1fr; }
   .contact-form-wrapper { padding: 24px; }
   .footer__inner { flex-direction: column; text-align: center; }
   .footer__nav   { justify-content: center; }
