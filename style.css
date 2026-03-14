@@ -58,9 +58,9 @@
 }
 
 /* ═══════════════════════════════════════════════
-   PARTICLES BACKGROUND
+   ORBS BACKGROUND
 ══════════════════════════════════════════════ */
-#particlesBg {
+#orbsBg {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -69,9 +69,9 @@
   z-index: 0;
 }
 
-/* VFX section covers particles via isolation: isolate (set below) */
-
 main, header, footer { position: relative; z-index: 1; }
+
+.section--vfx { isolation: isolate; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -665,10 +665,10 @@ a   { text-decoration: none; color: inherit; }
 .section--vfx {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   /* Transition fond noir → violet au scroll via JS */
   background: #000000;
   transition: background 0.8s ease;
-  isolation: isolate;
 }
 .section--vfx.vfx--visible {
   background: #06020f;

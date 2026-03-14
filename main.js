@@ -119,107 +119,86 @@ document.addEventListener('DOMContentLoaded', async () => {
     animId = requestAnimationFrame(draw);
   }
 
-  // ── Particules flottantes (toutes sections sauf VFX) ─
-  const pCanvas = document.getElementById('particlesBg');
-  if (pCanvas) {
-    const pCtx = pCanvas.getContext('2d');
-    let pW, pH, particles;
+  // ── Petites boules flottantes (background) ───
+  const orbCanvas = document.getElementById('orbsBg');
+  if (orbCanvas) {
+    const oCtx = orbCanvas.getContext('2d');
+    let oW, oH, orbs;
 
-    const PARTICLE_COUNT = 90;
-    const MAX_DIST       = 140;   // distance max pour tracer une ligne
+    const ORB_COUNT = 35;
     const COLORS = [
-      'rgba(106,168,224,',  // --accent bleu
-      'rgba(154,196,240,',  // --accent-bright
-      'rgba(61,112,160,',   // --accent-dim
-      'rgba(220,232,244,',  // --white
+      { h: 210, s: 70 },  // bleu
+      { h: 220, s: 65 },  // bleu-indigo
+      { h: 200, s: 60 },  // bleu clair
+      { h: 230, s: 55 },  // indigo doux
     ];
 
-    function createParticles() {
-      particles = Array.from({ length: PARTICLE_COUNT }, () => ({
-        x:    Math.random() * pW,
-        y:    Math.random() * pH,
-        vx:   (Math.random() - 0.5) * 0.35,
-        vy:   (Math.random() - 0.5) * 0.35,
-        r:    1 + Math.random() * 1.8,
-        a:    0.25 + Math.random() * 0.55,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      }));
+    function createOrbs() {
+      orbs = Array.from({ length: ORB_COUNT }, () => {
+        const c = COLORS[Math.floor(Math.random() * COLORS.length)];
+        return {
+          x:  Math.random() * oW,
+          y:  Math.random() * oH,
+          r:  2 + Math.random() * 3.5,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          h:  c.h + (Math.random() - 0.5) * 20,
+          s:  c.s,
+          a:  0.3 + Math.random() * 0.45,
+        };
+      });
     }
 
-    function resizeParticles() {
-      pW = pCanvas.width  = window.innerWidth;
-      pH = pCanvas.height = window.innerHeight;
-      createParticles();
+    function resizeOrbs() {
+      oW = orbCanvas.width  = window.innerWidth;
+      oH = orbCanvas.height = window.innerHeight;
+      createOrbs();
     }
 
-    // Calcule la zone à ne PAS dessiner (section VFX)
-    function getVfxRect() {
-      const vfxEl = document.getElementById('vfx');
-      if (!vfxEl) return null;
-      const r = vfxEl.getBoundingClientRect();
+    function getVfxBounds() {
+      const el = document.getElementById('vfx');
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
       return { top: r.top, bottom: r.bottom };
     }
 
-    function drawParticles() {
-      pCtx.clearRect(0, 0, pW, pH);
+    function drawOrbs() {
+      oCtx.clearRect(0, 0, oW, oH);
+      const vfx = getVfxBounds();
 
-      const vfx = getVfxRect();
+      orbs.forEach(o => {
+        // déplacement
+        o.x += o.vx;
+        o.y += o.vy;
+        if (o.x < -o.r)       o.x = oW + o.r;
+        if (o.x > oW + o.r)   o.x = -o.r;
+        if (o.y < -o.r)       o.y = oH + o.r;
+        if (o.y > oH + o.r)   o.y = -o.r;
 
-      // Met à jour et dessine les particules
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = pW;
-        if (p.x > pW) p.x = 0;
-        if (p.y < 0) p.y = pH;
-        if (p.y > pH) p.y = 0;
+        // masquer dans la zone VFX
+        if (vfx && o.y + o.r > vfx.top && o.y - o.r < vfx.bottom) return;
 
-        // Skip si dans la zone VFX
-        if (vfx && p.y > vfx.top - 10 && p.y < vfx.bottom + 10) return;
+        // dégradé radial doux
+        const grd = oCtx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+        grd.addColorStop(0,   `hsla(${o.h}, ${o.s}%, 75%, ${o.a})`);
+        grd.addColorStop(0.6, `hsla(${o.h}, ${o.s}%, 55%, ${o.a * 0.5})`);
+        grd.addColorStop(1,   `hsla(${o.h}, ${o.s}%, 40%, 0)`);
 
-        pCtx.beginPath();
-        pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        pCtx.fillStyle = p.color + p.a + ')';
-        pCtx.fill();
+        oCtx.beginPath();
+        oCtx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+        oCtx.fillStyle = grd;
+        oCtx.fill();
       });
 
-      // Connexions entre particules proches
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const a = particles[i];
-          const b = particles[j];
-
-          // Skip si l'une ou l'autre est dans la zone VFX
-          if (vfx) {
-            if ((a.y > vfx.top - 10 && a.y < vfx.bottom + 10) ||
-                (b.y > vfx.top - 10 && b.y < vfx.bottom + 10)) continue;
-          }
-
-          const dx   = a.x - b.x;
-          const dy   = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < MAX_DIST) {
-            const alpha = (1 - dist / MAX_DIST) * 0.12;
-            pCtx.beginPath();
-            pCtx.moveTo(a.x, a.y);
-            pCtx.lineTo(b.x, b.y);
-            pCtx.strokeStyle = `rgba(106,168,224,${alpha})`;
-            pCtx.lineWidth   = 0.8;
-            pCtx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(drawParticles);
+      requestAnimationFrame(drawOrbs);
     }
 
-    resizeParticles();
-    window.addEventListener('resize', resizeParticles);
-    drawParticles();
+    resizeOrbs();
+    window.addEventListener('resize', resizeOrbs);
+    drawOrbs();
   }
 
-
+  // ── Transition fond VFX au scroll ────────────
   const vfxSection = document.getElementById('vfx');
   if (vfxSection) {
     const vfxObserver = new IntersectionObserver(entries => {
@@ -344,8 +323,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     paymentTypeEl?.appendChild(opt);
   });
 
-  // ── Form submit — Discord Webhook ────────────
-  const WEBHOOK = 'https://discord.com/api/webhooks/1482488450811822332/IEoHkgT5PAIPcmDbL3lDBvDMO2yK0gHM4YQzs18KWHDI7EXoayMTcqh_W40bodgNrX8y';
+  // ── Form submit — TODO: add Discord Webhook URL ──
+  // const WEBHOOK = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
 
   const form        = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
@@ -353,66 +332,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   form?.addEventListener('submit', async e => {
     e.preventDefault();
-
-    const d = Object.fromEntries(new FormData(form));
-
-    // Bouton en état de chargement
-    if (submitBtn) {
-      submitBtn.disabled    = true;
-      submitBtn.textContent = 'Sending…';
-    }
-
-    // Construction du message Discord embed
-    const payload = {
-      username: 'differential studio — Contact',
-      avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
-      embeds: [{
-        title: '📬 New Commission Request',
-        color: 0x6aa8e0,
-        fields: [
-          { name: '👤 Name',           value: d.name        || '—', inline: true  },
-          { name: '💬 Discord',        value: d.discord     || '—', inline: true  },
-          { name: '📧 Email',          value: d.email       || '—', inline: true  },
-          { name: '🔧 Service',        value: d.serviceType || '—', inline: true  },
-          { name: '💳 Payment',        value: d.paymentType || '—', inline: true  },
-          { name: '💰 Budget',         value: d.budget ? `$${d.budget}` : '—', inline: true },
-          { name: '📝 Project Details',value: d.details     || '—', inline: false },
-        ],
-        footer: { text: 'differential studio — portfolio contact form' },
-        timestamp: new Date().toISOString(),
-      }]
-    };
-
-    try {
-      const res = await fetch(WEBHOOK, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        formSuccess.textContent = '✅ Message sent! I will get back to you very soon.';
-        formSuccess.style.color = '#6aa8e0';
-        formSuccess?.classList.add('visible');
-        form.reset();
-        setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
-      } else {
-        formSuccess.textContent = '❌ Something went wrong. Please reach out on Discord directly.';
-        formSuccess.style.color = '#e07070';
-        formSuccess?.classList.add('visible');
-        setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
-      }
-    } catch (err) {
-      formSuccess.textContent = '❌ Network error. Please reach out on Discord directly.';
-      formSuccess.style.color = '#e07070';
-      formSuccess?.classList.add('visible');
-      setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled    = false;
-        submitBtn.textContent = 'Send Message →';
-      }
-    }
+    formSuccess.textContent = '⚠️ Contact form coming soon. Please reach out on Discord directly.';
+    formSuccess.style.color = '#6aa8e0';
+    formSuccess?.classList.add('visible');
+    setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
   });
 
   // ── Animated stat counters ────────────────────
