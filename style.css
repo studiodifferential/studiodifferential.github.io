@@ -159,13 +159,29 @@ a   { text-decoration: none; color: inherit; }
 }
 
 .navbar__links { display: flex; gap: 32px; }
-.navbar__links a {
+
+.navbar__links a,
+.nav-link {
   font-size: 0.88rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: color var(--transition);
+  transition: color 0.22s ease, transform 0.22s ease, text-shadow 0.22s ease;
+  display: inline-block; /* nécessaire pour transform */
 }
-.navbar__links a:hover { color: var(--white); }
+
+/* Bleu — Work, Services, Contact */
+.nav-link--blue:hover {
+  color: #7ab8f0;
+  transform: scale(1.12);
+  text-shadow: 0 0 12px rgba(100, 160, 255, 0.45);
+}
+
+/* Violet — VFX */
+.nav-link--violet:hover {
+  color: #c4a0ff;
+  transform: scale(1.12);
+  text-shadow: 0 0 12px rgba(180, 120, 255, 0.50);
+}
 
 .navbar__burger {
   display: none;
