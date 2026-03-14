@@ -1,40 +1,39 @@
 /* ═══════════════════════════════════════════════
-   main.js — Charge data.json et anime la page
+   main.js — Loads data.json and powers the page
 ══════════════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // ── Chargement des données ────────────────────
+  // ── Load data ─────────────────────────────────
   let data;
   try {
     const res = await fetch('data.json');
     data = await res.json();
   } catch (e) {
-    console.error('Impossible de charger data.json :', e);
+    console.error('Could not load data.json:', e);
     return;
   }
 
-  // ── Navbar scroll ─────────────────────────────
+  // ── Navbar on scroll ──────────────────────────
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 30);
   });
 
-  // ── Menu burger (mobile) ──────────────────────
+  // ── Mobile burger menu ────────────────────────
   const burger   = document.getElementById('burger');
   const navLinks = document.getElementById('navLinks');
   burger?.addEventListener('click', () => {
     navLinks.classList.toggle('open');
   });
-  // Fermer en cliquant sur un lien
   navLinks?.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => navLinks.classList.remove('open'))
   );
 
-  // ── Projets ───────────────────────────────────
+  // ── Projects ──────────────────────────────────
   const grid        = document.getElementById('projectsGrid');
   const loadMoreBtn = document.getElementById('loadMoreBtn');
-  const VISIBLE     = 4; // Nombre de projets affichés initialement
+  const VISIBLE     = 4;
   let   showing     = VISIBLE;
 
   function renderProjects() {
@@ -45,10 +44,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (p.status === 'coming_soon') {
         card.innerHTML = `
-          <span class="project-card__type">À venir</span>
+          <span class="project-card__type">Coming Soon</span>
           <h3 class="project-card__title">${p.title}</h3>
           <p class="project-card__desc">${p.description}</p>
-          <span class="coming-soon-badge">⏳ Bientôt disponible</span>
+          <span class="coming-soon-badge">Coming soon</span>
         `;
       } else {
         const tagsHTML = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
@@ -63,7 +62,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       grid.appendChild(card);
     });
 
-    // Masquer bouton si tout est affiché
     if (loadMoreBtn) {
       loadMoreBtn.style.display = showing >= data.projects.length ? 'none' : '';
     }
@@ -78,11 +76,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ── Services ──────────────────────────────────
   const servicesGrid = document.getElementById('servicesGrid');
   if (servicesGrid) {
-    data.services.forEach(s => {
+    data.services.forEach((s, i) => {
       const card = document.createElement('div');
       card.className = 'service-card';
       card.innerHTML = `
-        <div class="service-card__icon">${s.icon}</div>
+        <span class="service-card__index">0${i + 1}</span>
         <h3 class="service-card__title">${s.title}</h3>
         <p class="service-card__desc">${s.description}</p>
       `;
@@ -90,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // ── Selects du formulaire ─────────────────────
+  // ── Form selects ──────────────────────────────
   const serviceTypeEl = document.getElementById('serviceType');
   const paymentTypeEl = document.getElementById('paymentType');
 
@@ -106,19 +104,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     paymentTypeEl?.appendChild(opt);
   });
 
-  // ── Formulaire (mock submit) ──────────────────
+  // ── Form submit (mock) ────────────────────────
   const form        = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
 
   form?.addEventListener('submit', e => {
     e.preventDefault();
-    // TODO: Connecter à un backend (ex: Formspree, EmailJS, etc.)
+    // TODO: Connect to a backend (e.g. Formspree, EmailJS)
     formSuccess?.classList.add('visible');
     form.reset();
     setTimeout(() => formSuccess?.classList.remove('visible'), 5000);
   });
 
-  // ── Compteurs animés (stats) ──────────────────
+  // ── Animated stat counters ────────────────────
   const counters = document.querySelectorAll('.stat-card__value[data-target]');
 
   const animateCounter = (el) => {
@@ -133,7 +131,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 40);
   };
 
-  // Observer pour déclencher au scroll
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

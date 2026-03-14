@@ -1,127 +1,119 @@
 {
   "site": {
-    "name": "TonPseudo",
+    "name": "differential studio",
     "tagline": "Expert Roblox Studio Developer",
-    "description": "Création de systèmes Roblox performants, modulaires et fiables — je donne vie à tes idées de jeu avec une architecture propre et une exécution soignée.",
-    "status": "Disponible pour commissions",
-    "discord": "tonpseudo",
-    "responseTime": "Sous 24h",
-    "nav": ["Projets", "Services", "Contact"]
+    "description": "Building efficient, modular, and reliable Roblox systems — bringing your game ideas to life with clean architecture and polished execution.",
+    "status": "Available for commissions",
+    "discord": "differentialstudio",
+    "responseTime": "Within 24h",
+    "nav": ["Work", "Services", "Contact"]
   },
   "stats": [
-    { "value": "50M+", "label": "Visites contribuées" },
-    { "value": "2+", "label": "Années d'expérience" },
-    { "value": "Garanti", "label": "Satisfaction client" }
+    { "value": "50M+", "label": "Contributed Visits" },
+    { "value": "2+", "label": "Years of Experience" },
+    { "value": "Guaranteed", "label": "Client Satisfaction" }
   ],
   "projects": [
     {
       "id": 1,
-      "title": "Système de Donation avec Cutscene",
-      "type": "Commission Payante",
-      "description": "Cutscene animée déclenchée par les donations, avec effets visuels et sons synchronisés.",
+      "title": "Donation Game Cutscene",
+      "type": "Paid Commission",
+      "description": "Animated cutscene triggered by donations, with synchronized visual effects and sounds.",
       "tags": ["UI", "Animation", "DataStore"],
       "status": "completed"
     },
     {
       "id": 2,
-      "title": "Système de Mini-Jeux Images",
-      "type": "Commission Payante",
-      "description": "Mini-jeu interactif basé sur la reconnaissance d'images avec scoring temps réel.",
+      "title": "Image Mini Game System",
+      "type": "Paid Commission",
+      "description": "Interactive mini-game based on image recognition with real-time scoring.",
       "tags": ["Game Mechanics", "UI", "Leaderboard"],
       "status": "completed"
     },
     {
       "id": 3,
-      "title": "Optimisation Système de Monétisation",
-      "type": "Commission Payante",
-      "description": "Refonte et optimisation d'un système de passes et DevProducts existant.",
-      "tags": ["Optimisation", "MonétisATION", "DevProducts"],
+      "title": "Monetization System Fix & Optimization",
+      "type": "Paid Commission",
+      "description": "Full rework and optimization of an existing Game Passes and DevProducts system.",
+      "tags": ["Optimization", "Monetization", "DevProducts"],
       "status": "completed"
     },
     {
       "id": 4,
-      "title": "Catalog Shop + Système UGC Gratuit",
-      "type": "Commission Payante",
-      "description": "Boutique catalogue complète avec distribution automatique d'UGC gratuits.",
-      "tags": ["Catalogue", "UGC", "DataStore"],
+      "title": "Roblox Catalog Shop + Free UGC System",
+      "type": "Paid Commission",
+      "description": "Complete catalog shop with automated free UGC item distribution.",
+      "tags": ["Catalog", "UGC", "DataStore"],
       "status": "completed"
     },
     {
       "id": 5,
-      "title": "Système Multiplates-formes Pression",
-      "type": "Commission Payante",
-      "description": "Mécanisme de plaques de pression multijoueur synchronisé côté serveur.",
-      "tags": ["Multijoueur", "Mécanique", "Serveur"],
+      "title": "Simple Multiplayer Pressure Plate System",
+      "type": "Paid Commission",
+      "description": "Server-synchronized multiplayer pressure plate mechanic.",
+      "tags": ["Multiplayer", "Mechanics", "Server"],
       "status": "completed"
     },
     {
       "id": 6,
-      "title": "Projet en cours",
-      "type": "À venir",
-      "description": "Nouveau projet bientôt disponible.",
+      "title": "Upcoming Project",
+      "type": "Coming Soon",
+      "description": "New project coming soon.",
       "tags": [],
       "status": "coming_soon"
     }
   ],
   "services": [
     {
-      "icon": "💾",
-      "title": "Data & Sauvegardes",
-      "description": "Leaderboards custom, DataStores, ProfileService et frameworks de sauvegarde/chargement."
+      "title": "Data & Save Systems",
+      "description": "Custom leaderboards, DataStores, ProfileService, and save/load frameworks."
     },
     {
-      "icon": "🖥️",
       "title": "UI & Interfaces",
-      "description": "Shops interactifs, menus, notifications et systèmes synchronisés client-serveur."
+      "description": "Interactive UI stores, menus, notifications, and client-server synced systems."
     },
     {
-      "icon": "⚙️",
-      "title": "Mécaniques de Jeu",
-      "description": "Simulateurs, obbies, missions, quêtes, récompenses journalières, systèmes de rounds."
+      "title": "Game Mechanics",
+      "description": "Simulators, obbies, missions, quests, daily rewards, round & voting systems."
     },
     {
-      "icon": "💰",
-      "title": "Trading & Économie",
-      "description": "Trading sécurisé, systèmes de donation, Game Passes et intégration DevProducts."
+      "title": "Trading & Economy",
+      "description": "Secure trading, donation systems, Game Passes, and DevProducts integration."
     },
     {
-      "icon": "🎬",
       "title": "Animations & Cutscenes",
-      "description": "Cutscenes custom, animations joueur et architecture modulaire réutilisable."
+      "description": "Custom cutscenes, player animations, and modular, reusable architecture."
     },
     {
-      "icon": "🚀",
-      "title": "Optimisation & Scalabilité",
-      "description": "Code efficace et modulaire pour un gameplay fluide quelle que soit la taille du jeu."
+      "title": "Optimization & Scalability",
+      "description": "Efficient, modular code to ensure smooth gameplay for any game size or player count."
     },
     {
-      "icon": "🤝",
-      "title": "Projets en Équipe",
-      "description": "Scripting collaboratif, intégration transparente avec votre équipe de développement."
+      "title": "Team Projects",
+      "description": "Collaborative scripting, integrating seamlessly with your existing development team."
     },
     {
-      "icon": "❓",
-      "title": "Autre besoin ?",
-      "description": "Contacte-moi pour discuter de ton projet spécifique et obtenir un devis personnalisé."
+      "title": "Other",
+      "description": "Have a specific need? Reach out and I will put together a custom quote for your project."
     }
   ],
   "contact": {
-    "title": "Construisons quelque chose d'incroyable",
-    "subtitle": "Tu as un projet en tête ? Je serais ravi d'en entendre parler. Remplis le formulaire ou contacte-moi directement sur Discord pour une réponse rapide.",
+    "title": "Let's Build Something Amazing",
+    "subtitle": "Have a project in mind? Fill out the form or reach out directly on Discord for a faster response.",
     "serviceTypes": [
-      "Data & Sauvegardes",
+      "Data & Save Systems",
       "UI & Interfaces",
-      "Mécaniques de Jeu",
-      "Trading & Économie",
+      "Game Mechanics",
+      "Trading & Economy",
       "Animations & Cutscenes",
-      "Optimisation",
-      "Projet en Équipe",
-      "Autre"
+      "Optimization",
+      "Team Project",
+      "Other"
     ],
-    "paymentTypes": ["Robux", "PayPal", "Virement bancaire", "Autre"]
+    "paymentTypes": ["Robux", "PayPal", "Bank Transfer", "Other"]
   },
   "footer": {
     "year": 2026,
-    "rights": "Tous droits réservés."
+    "rights": "All rights reserved."
   }
 }
