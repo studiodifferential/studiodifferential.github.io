@@ -533,16 +533,17 @@ a   { text-decoration: none; color: inherit; }
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
 .service-card:hover {
-  border-color: rgba(80, 140, 210, 0.55);
+  border-color: rgba(80, 140, 210, 0.60);
   background:
-    radial-gradient(ellipse 90% 70% at 50% 110%, rgba(40, 90, 180, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 100% 80% at 50% 110%, rgba(40, 90, 180, 0.16) 0%, rgba(30, 70, 160, 0.06) 50%, transparent 70%),
     #0e0e0e;
-  transform: translateY(-3px);
+  transform: translateY(-5px) scale(1.01);
   box-shadow:
-    0 0  0  1px rgba(80, 140, 210, 0.20),
-    0 0 18px    rgba(50, 110, 200, 0.10),
-    0 6px 32px  rgba(0, 0, 0, 0.70),
-    inset 0 0 24px rgba(40, 90, 180, 0.06);
+    0 0  0  1px rgba(80, 140, 210, 0.25),
+    0 0 24px    rgba(50, 110, 200, 0.18),
+    0 0 48px    rgba(40,  90, 180, 0.08),
+    0 8px 40px  rgba(0, 0, 0, 0.70),
+    inset 0 0 32px rgba(40, 90, 180, 0.08);
 }
 
 .service-card__icon {
@@ -555,21 +556,26 @@ a   { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: center;
   margin-bottom: 4px;
-  transition: background var(--transition), border-color var(--transition);
+  transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 .service-card__icon svg {
   width: 18px;
   height: 18px;
   stroke: #5a9ad4;
   stroke-width: 1.8;
-  transition: stroke var(--transition);
+  transition: stroke var(--transition), transform var(--transition);
 }
 .service-card:hover .service-card__icon {
-  background: rgba(80, 140, 210, 0.15);
-  border-color: rgba(80, 140, 210, 0.35);
+  background: rgba(80, 140, 210, 0.18);
+  border-color: rgba(80, 140, 210, 0.50);
+  transform: scale(1.12);
+  box-shadow:
+    0 0 12px rgba(60, 120, 210, 0.25),
+    0 0 28px rgba(50, 110, 200, 0.12);
 }
 .service-card:hover .service-card__icon svg {
-  stroke: #88bfe8;
+  stroke: #9dcbf0;
+  transform: scale(1.10);
 }
 
 .service-card__title {
