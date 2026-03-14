@@ -509,13 +509,15 @@ a   { text-decoration: none; color: inherit; }
   font-family: var(--font-mono);
 }
 
+
+
 /* ═══════════════════════════════════════════════
    SERVICES
 ══════════════════════════════════════════════ */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   margin-bottom: 48px;
 }
 
@@ -523,10 +525,10 @@ a   { text-decoration: none; color: inherit; }
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   box-shadow: var(--shadow-card);
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
@@ -546,19 +548,23 @@ a   { text-decoration: none; color: inherit; }
 .service-card__index {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  color: #243040;
+  color: #2e4258;
   letter-spacing: 0.05em;
 }
 
 .service-card__title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #ccdcec;
+  color: #f0f4ff;
+  transition: color var(--transition);
+}
+.service-card:hover .service-card__title {
+  color: #6aa8e0;
 }
 
 .service-card__desc {
-  font-size: 0.85rem;
-  color: #4a6880;
+  font-size: 0.875rem;
+  color: #8098b0;
   line-height: 1.65;
 }
 
@@ -806,6 +812,7 @@ a   { text-decoration: none; color: inherit; }
   .contact-layout { grid-template-columns: 1fr; }
   .contact-info { flex-direction: row; flex-wrap: wrap; }
   .contact-info__card { flex: 1; min-width: 200px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 680px) {
@@ -826,6 +833,7 @@ a   { text-decoration: none; color: inherit; }
 
   .hero__stats { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
   .contact-form-wrapper { padding: 24px; }
   .footer__inner { flex-direction: column; text-align: center; }
   .footer__nav   { justify-content: center; }
