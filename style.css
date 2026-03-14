@@ -407,7 +407,7 @@ a   { text-decoration: none; color: inherit; }
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: #5a9ad4;
 }
 
 .section__title {
@@ -699,10 +699,19 @@ a   { text-decoration: none; color: inherit; }
 
 .form-input::placeholder { color: #2a3a4a; }
 
-/* État focus / sélectionné — stroke bleu + halo intérieur */
-.form-input:focus,
-.form-select:focus {
+/* État focus — inputs texte */
+.form-input:not(.form-select):focus {
   background: #04080f;
+  border-color: rgba(80, 140, 210, 0.60);
+  color: #c0d4e8;
+  box-shadow:
+    0 0  0  3px rgba(60, 110, 190, 0.08),
+    0 0 12px    rgba(50, 100, 180, 0.10),
+    inset 0 0 16px rgba(40, 80, 160, 0.06);
+}
+
+/* État focus — selects (background géré séparément pour ne pas écraser background-image) */
+.form-select:focus {
   border-color: rgba(80, 140, 210, 0.60);
   color: #c0d4e8;
   box-shadow:
@@ -715,13 +724,17 @@ a   { text-decoration: none; color: inherit; }
 .form-select {
   cursor: pointer;
   appearance: none;
+  background-color: #060606;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6a8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 36px;
 }
 .form-select:focus {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2388bfff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-color: #04080f;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a9ad4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
 }
 .form-select option {
   background: #080c12;
