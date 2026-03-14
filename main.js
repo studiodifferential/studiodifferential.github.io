@@ -14,6 +14,80 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  // ── Brume animée VFX (canvas) ─────────────────
+  const fogCanvas = document.getElementById('vfxFog');
+  if (fogCanvas) {
+    const ctx = fogCanvas.getContext('2d');
+    let W, H, blobs, animId;
+
+    // Chaque blob est une ellipse floue qui dérive lentement
+    function createBlobs() {
+      blobs = Array.from({ length: 9 }, () => ({
+        x:    Math.random() * W,
+        y:    Math.random() * H,
+        rx:   W * (0.18 + Math.random() * 0.22),
+        ry:   H * (0.12 + Math.random() * 0.18),
+        vx:   (Math.random() - 0.5) * 0.28,
+        vy:   (Math.random() - 0.5) * 0.18,
+        a:    0.025 + Math.random() * 0.045,   // opacité max
+        phase: Math.random() * Math.PI * 2,    // phase de pulsation
+        speed: 0.0004 + Math.random() * 0.0006,
+        // couleur : mélange violet/indigo
+        hue:  260 + Math.random() * 50,
+        sat:  60  + Math.random() * 30,
+      }));
+    }
+
+    function resize() {
+      const rect = fogCanvas.parentElement.getBoundingClientRect();
+      W = fogCanvas.width  = rect.width;
+      H = fogCanvas.height = rect.height;
+      createBlobs();
+    }
+
+    function draw(ts) {
+      ctx.clearRect(0, 0, W, H);
+
+      blobs.forEach(b => {
+        // Dérive
+        b.x += b.vx;
+        b.y += b.vy;
+        // Rebond doux sur les bords
+        if (b.x < -b.rx) b.x = W + b.rx;
+        if (b.x >  W + b.rx) b.x = -b.rx;
+        if (b.y < -b.ry) b.y = H + b.ry;
+        if (b.y >  H + b.ry) b.y = -b.ry;
+
+        // Pulsation d'opacité
+        const alpha = b.a * (0.5 + 0.5 * Math.sin(ts * b.speed + b.phase));
+
+        // Dégradé radial elliptique
+        const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, Math.max(b.rx, b.ry));
+        grd.addColorStop(0,   `hsla(${b.hue}, ${b.sat}%, 65%, ${alpha})`);
+        grd.addColorStop(0.5, `hsla(${b.hue}, ${b.sat}%, 45%, ${alpha * 0.4})`);
+        grd.addColorStop(1,   `hsla(${b.hue}, ${b.sat}%, 30%, 0)`);
+
+        // On applique l'échelle pour rendre l'ellipse (sinon le gradient est rond)
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.scale(1, b.ry / b.rx);
+        ctx.translate(-b.x, -b.y);
+
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.rx, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+        ctx.restore();
+      });
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    animId = requestAnimationFrame(draw);
+  }
+
   // ── Transition fond VFX au scroll ────────────
   const vfxSection = document.getElementById('vfx');
   if (vfxSection) {

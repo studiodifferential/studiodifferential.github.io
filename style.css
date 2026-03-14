@@ -666,6 +666,21 @@ a   { text-decoration: none; color: inherit; }
 
 .section--vfx .container { position: relative; z-index: 1; }
 
+/* Canvas brume animée */
+.vfx__fog {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.section--vfx.vfx--visible .vfx__fog {
+  opacity: 1;
+}
+
 /* Label violet éclairci */
 .section__label--vfx {
   color: #b08af0;
