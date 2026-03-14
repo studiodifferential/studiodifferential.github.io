@@ -215,19 +215,19 @@ a   { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
-/* Halo positionné DERRIÈRE les boutons (bas du hero) — supprimé en haut */
+/* Halo bleuté centré — couvre tout le fond du hero */
 .hero__glow {
   position: absolute;
-  bottom: 12%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 260px;
+  transform: translate(-50%, -50%);
+  width: 1000px;
+  height: 800px;
   background: radial-gradient(
-    ellipse 80% 70% at 50% 100%,
-    rgba(168, 212, 255, 0.10) 0%,
-    rgba(100, 160, 255, 0.04) 50%,
-    transparent 100%
+    ellipse 70% 60% at 50% 50%,
+    rgba(60, 120, 255, 0.09) 0%,
+    rgba(80, 140, 255, 0.04) 45%,
+    transparent 70%
   );
   pointer-events: none;
   z-index: 0;
@@ -246,7 +246,7 @@ a   { text-decoration: none; color: inherit; }
 
 /* ═══════════════════════════════════════════════
    BADGE — "Available for commissions"
-   Animation : lumière qui tourne sur le contour
+   Animation : le contour s'illumine puis s'éteint
 ══════════════════════════════════════════════ */
 .hero__badge {
   position: relative;
@@ -260,46 +260,27 @@ a   { text-decoration: none; color: inherit; }
   font-weight: 500;
   color: var(--accent-dim);
   font-family: var(--font-mono);
-
-  /* Le z-index crée le stacking context nécessaire */
-  isolation: isolate;
+  border: 1px solid rgba(168, 212, 255, 0.10);
+  animation: badge-glow 2.8s ease-in-out infinite;
 }
 
-/* Anneau lumineux rotatif — utilise un pseudo sur le WRAPPER */
-.hero__badge-ring {
-  position: absolute;
-  inset: -1.5px;
-  border-radius: 999px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 70deg,
-    rgba(168, 212, 255, 0.15) 100deg,
-    rgba(200, 224, 255, 0.80) 180deg,
-    rgba(255, 255, 255, 0.90) 200deg,
-    rgba(200, 224, 255, 0.80) 220deg,
-    rgba(168, 212, 255, 0.15) 260deg,
-    transparent 290deg,
-    transparent 360deg
-  );
-  animation: badge-rotate 2.8s linear infinite;
-  z-index: -1;
-  border-radius: 999px;
+@keyframes badge-glow {
+  0%, 100% {
+    border-color: rgba(168, 212, 255, 0.08);
+    box-shadow: none;
+  }
+  50% {
+    border-color: rgba(168, 212, 255, 0.80);
+    box-shadow:
+      0 0  6px rgba(168, 212, 255, 0.40),
+      0 0 16px rgba(120, 180, 255, 0.22),
+      0 0 32px rgba(80,  140, 255, 0.12),
+      inset 0 0 8px rgba(168, 212, 255, 0.06);
+  }
 }
 
-/* Fond intérieur masque l'intérieur du cône, ne laisse que le bord */
-.hero__badge-ring::after {
-  content: '';
-  position: absolute;
-  inset: 1.5px;
-  border-radius: 999px;
-  background: #0c0c0c;
-}
-
-@keyframes badge-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
+/* Div ring inutilisé — caché */
+.hero__badge-ring { display: none; }
 
 /* Point vert pulsant */
 .hero__badge-dot {
