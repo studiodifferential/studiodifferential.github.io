@@ -353,12 +353,19 @@ a   { text-decoration: none; color: inherit; }
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
 .stat-card:hover {
-  border-color: var(--border-hover);
+  border-color: rgba(80, 140, 210, 0.55);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(40, 90, 180, 0.10) 0%, transparent 70%),
+    #0e0e0e;
   transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
+  box-shadow:
+    0 0  0  1px rgba(80, 140, 210, 0.20),
+    0 0 18px    rgba(50, 110, 200, 0.10),
+    0 6px 32px  rgba(0, 0, 0, 0.70),
+    inset 0 0 24px rgba(40, 90, 180, 0.06);
 }
 .stat-card--accent {
   border-color: var(--border-accent);
@@ -375,7 +382,7 @@ a   { text-decoration: none; color: inherit; }
 
 .stat-card__label {
   font-size: 0.78rem;
-  color: var(--text-muted);
+  color: #4a6880;
   font-family: var(--font-mono);
   text-align: center;
 }
