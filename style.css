@@ -57,6 +57,22 @@
   --shadow-hover:  0 8px 40px rgba(0, 0, 0, 0.8);
 }
 
+/* ═══════════════════════════════════════════════
+   PARTICLES BACKGROUND
+══════════════════════════════════════════════ */
+#particlesBg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* VFX section covers particles via isolation: isolate (set below) */
+
+main, header, footer { position: relative; z-index: 1; }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
@@ -652,6 +668,7 @@ a   { text-decoration: none; color: inherit; }
   /* Transition fond noir → violet au scroll via JS */
   background: #000000;
   transition: background 0.8s ease;
+  isolation: isolate;
 }
 .section--vfx.vfx--visible {
   background: #06020f;

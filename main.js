@@ -119,7 +119,107 @@ document.addEventListener('DOMContentLoaded', async () => {
     animId = requestAnimationFrame(draw);
   }
 
-  // ── Transition fond VFX au scroll ────────────
+  // ── Particules flottantes (toutes sections sauf VFX) ─
+  const pCanvas = document.getElementById('particlesBg');
+  if (pCanvas) {
+    const pCtx = pCanvas.getContext('2d');
+    let pW, pH, particles;
+
+    const PARTICLE_COUNT = 90;
+    const MAX_DIST       = 140;   // distance max pour tracer une ligne
+    const COLORS = [
+      'rgba(106,168,224,',  // --accent bleu
+      'rgba(154,196,240,',  // --accent-bright
+      'rgba(61,112,160,',   // --accent-dim
+      'rgba(220,232,244,',  // --white
+    ];
+
+    function createParticles() {
+      particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+        x:    Math.random() * pW,
+        y:    Math.random() * pH,
+        vx:   (Math.random() - 0.5) * 0.35,
+        vy:   (Math.random() - 0.5) * 0.35,
+        r:    1 + Math.random() * 1.8,
+        a:    0.25 + Math.random() * 0.55,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      }));
+    }
+
+    function resizeParticles() {
+      pW = pCanvas.width  = window.innerWidth;
+      pH = pCanvas.height = window.innerHeight;
+      createParticles();
+    }
+
+    // Calcule la zone à ne PAS dessiner (section VFX)
+    function getVfxRect() {
+      const vfxEl = document.getElementById('vfx');
+      if (!vfxEl) return null;
+      const r = vfxEl.getBoundingClientRect();
+      return { top: r.top, bottom: r.bottom };
+    }
+
+    function drawParticles() {
+      pCtx.clearRect(0, 0, pW, pH);
+
+      const vfx = getVfxRect();
+
+      // Met à jour et dessine les particules
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = pW;
+        if (p.x > pW) p.x = 0;
+        if (p.y < 0) p.y = pH;
+        if (p.y > pH) p.y = 0;
+
+        // Skip si dans la zone VFX
+        if (vfx && p.y > vfx.top - 10 && p.y < vfx.bottom + 10) return;
+
+        pCtx.beginPath();
+        pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        pCtx.fillStyle = p.color + p.a + ')';
+        pCtx.fill();
+      });
+
+      // Connexions entre particules proches
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i];
+          const b = particles[j];
+
+          // Skip si l'une ou l'autre est dans la zone VFX
+          if (vfx) {
+            if ((a.y > vfx.top - 10 && a.y < vfx.bottom + 10) ||
+                (b.y > vfx.top - 10 && b.y < vfx.bottom + 10)) continue;
+          }
+
+          const dx   = a.x - b.x;
+          const dy   = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.12;
+            pCtx.beginPath();
+            pCtx.moveTo(a.x, a.y);
+            pCtx.lineTo(b.x, b.y);
+            pCtx.strokeStyle = `rgba(106,168,224,${alpha})`;
+            pCtx.lineWidth   = 0.8;
+            pCtx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(drawParticles);
+    }
+
+    resizeParticles();
+    window.addEventListener('resize', resizeParticles);
+    drawParticles();
+  }
+
+
   const vfxSection = document.getElementById('vfx');
   if (vfxSection) {
     const vfxObserver = new IntersectionObserver(entries => {
@@ -244,8 +344,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     paymentTypeEl?.appendChild(opt);
   });
 
-  // ── Form submit — TODO: add Discord Webhook URL ──
-  // const WEBHOOK = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+  // ── Form submit — Discord Webhook ────────────
+  const WEBHOOK = 'https://discord.com/api/webhooks/1482488450811822332/IEoHkgT5PAIPcmDbL3lDBvDMO2yK0gHM4YQzs18KWHDI7EXoayMTcqh_W40bodgNrX8y';
 
   const form        = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
@@ -253,11 +353,66 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   form?.addEventListener('submit', async e => {
     e.preventDefault();
-    // Webhook not configured yet — reach out on Discord directly.
-    formSuccess.textContent = '⚠️ Contact form coming soon. Please reach out on Discord directly.';
-    formSuccess.style.color = '#6aa8e0';
-    formSuccess?.classList.add('visible');
-    setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+
+    const d = Object.fromEntries(new FormData(form));
+
+    // Bouton en état de chargement
+    if (submitBtn) {
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Sending…';
+    }
+
+    // Construction du message Discord embed
+    const payload = {
+      username: 'differential studio — Contact',
+      avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+      embeds: [{
+        title: '📬 New Commission Request',
+        color: 0x6aa8e0,
+        fields: [
+          { name: '👤 Name',           value: d.name        || '—', inline: true  },
+          { name: '💬 Discord',        value: d.discord     || '—', inline: true  },
+          { name: '📧 Email',          value: d.email       || '—', inline: true  },
+          { name: '🔧 Service',        value: d.serviceType || '—', inline: true  },
+          { name: '💳 Payment',        value: d.paymentType || '—', inline: true  },
+          { name: '💰 Budget',         value: d.budget ? `$${d.budget}` : '—', inline: true },
+          { name: '📝 Project Details',value: d.details     || '—', inline: false },
+        ],
+        footer: { text: 'differential studio — portfolio contact form' },
+        timestamp: new Date().toISOString(),
+      }]
+    };
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        formSuccess.textContent = '✅ Message sent! I will get back to you very soon.';
+        formSuccess.style.color = '#6aa8e0';
+        formSuccess?.classList.add('visible');
+        form.reset();
+        setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+      } else {
+        formSuccess.textContent = '❌ Something went wrong. Please reach out on Discord directly.';
+        formSuccess.style.color = '#e07070';
+        formSuccess?.classList.add('visible');
+        setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+      }
+    } catch (err) {
+      formSuccess.textContent = '❌ Network error. Please reach out on Discord directly.';
+      formSuccess.style.color = '#e07070';
+      formSuccess?.classList.add('visible');
+      setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Send Message →';
+      }
+    }
   });
 
   // ── Animated stat counters ────────────────────
