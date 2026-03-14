@@ -901,6 +901,42 @@ a   { text-decoration: none; color: inherit; }
 }
 
 /* ═══════════════════════════════════════════════
+   TRANSITIONS ENTRE SECTIONS
+══════════════════════════════════════════════ */
+
+/* Services (--alt) → VFX : fondu bas vers noir violacé */
+.section--alt::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, #06020f);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* VFX : fondu entrant en haut depuis le noir */
+.section--vfx .vfx__fade-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 130px;
+  background: linear-gradient(to bottom, #070707, transparent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* VFX → Contact : fondu sortant vers le noir */
+.section--vfx::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, #000000);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ═══════════════════════════════════════════════
    CONTACT
 ══════════════════════════════════════════════ */
 .contact-layout {
@@ -924,6 +960,21 @@ a   { text-decoration: none; color: inherit; }
   transition: border-color var(--transition);
 }
 .contact-info__card:hover { border-color: var(--border-hover); }
+
+/* Discord card — cliquable avec lien */
+.contact-info__card--link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.contact-info__card--link:hover {
+  border-color: #7289da;
+  box-shadow: 0 0 18px rgba(114, 137, 218, 0.22);
+}
+.contact-info__icon-label--discord {
+  background: linear-gradient(135deg, #4a5fc7 0%, #7289da 100%);
+  border-color: rgba(114, 137, 218, 0.40);
+  color: #ffffff;
+}
 
 .contact-info__icon-label {
   width: 36px; height: 36px;

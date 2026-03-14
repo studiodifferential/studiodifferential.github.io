@@ -20,21 +20,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ctx = fogCanvas.getContext('2d');
     let W, H, blobs, animId;
 
-    // Chaque blob est une ellipse floue qui dérive lentement
     function createBlobs() {
-      blobs = Array.from({ length: 9 }, () => ({
-        x:    Math.random() * W,
-        y:    Math.random() * H,
-        rx:   W * (0.18 + Math.random() * 0.22),
-        ry:   H * (0.12 + Math.random() * 0.18),
-        vx:   (Math.random() - 0.5) * 0.28,
-        vy:   (Math.random() - 0.5) * 0.18,
-        a:    0.025 + Math.random() * 0.045,   // opacité max
-        phase: Math.random() * Math.PI * 2,    // phase de pulsation
-        speed: 0.0004 + Math.random() * 0.0006,
-        // couleur : mélange violet/indigo
-        hue:  260 + Math.random() * 50,
-        sat:  60  + Math.random() * 30,
+      blobs = Array.from({ length: 18 }, (_, i) => ({
+        x:     Math.random() * W,
+        y:     Math.random() * H,
+        rx:    W  * (0.20 + Math.random() * 0.30),
+        ry:    H  * (0.14 + Math.random() * 0.22),
+        // vitesse de base + une composante sinusoïdale pour un mouvement organique
+        vx:    (Math.random() - 0.5) * 0.45,
+        vy:    (Math.random() - 0.5) * 0.28,
+        // amplitude du mouvement ondulatoire
+        swayAmp:  30 + Math.random() * 60,
+        swayFreq: 0.00015 + Math.random() * 0.00020,
+        swayOff:  Math.random() * Math.PI * 2,
+        a:     0.045 + Math.random() * 0.07,
+        phase: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.0003 + Math.random() * 0.0005,
+        hue:   255 + Math.random() * 60,
+        sat:   65  + Math.random() * 30,
+        // position de base pour le sway
+        baseX: Math.random() * W,
+        baseY: Math.random() * H,
       }));
     }
 
@@ -49,32 +55,36 @@ document.addEventListener('DOMContentLoaded', async () => {
       ctx.clearRect(0, 0, W, H);
 
       blobs.forEach(b => {
-        // Dérive
-        b.x += b.vx;
-        b.y += b.vy;
-        // Rebond doux sur les bords
-        if (b.x < -b.rx) b.x = W + b.rx;
-        if (b.x >  W + b.rx) b.x = -b.rx;
-        if (b.y < -b.ry) b.y = H + b.ry;
-        if (b.y >  H + b.ry) b.y = -b.ry;
+        // Dérive de base
+        b.baseX += b.vx;
+        b.baseY += b.vy;
+
+        // Wrap autour
+        if (b.baseX < -b.rx) b.baseX = W + b.rx;
+        if (b.baseX >  W + b.rx) b.baseX = -b.rx;
+        if (b.baseY < -b.ry) b.baseY = H + b.ry;
+        if (b.baseY >  H + b.ry) b.baseY = -b.ry;
+
+        // Mouvement ondulatoire par-dessus la dérive
+        const cx = b.baseX + Math.sin(ts * b.swayFreq + b.swayOff) * b.swayAmp;
+        const cy = b.baseY + Math.cos(ts * b.swayFreq * 0.7 + b.swayOff) * (b.swayAmp * 0.5);
 
         // Pulsation d'opacité
-        const alpha = b.a * (0.5 + 0.5 * Math.sin(ts * b.speed + b.phase));
+        const alpha = b.a * (0.45 + 0.55 * Math.sin(ts * b.pulseSpeed + b.phase));
 
-        // Dégradé radial elliptique
-        const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, Math.max(b.rx, b.ry));
-        grd.addColorStop(0,   `hsla(${b.hue}, ${b.sat}%, 65%, ${alpha})`);
-        grd.addColorStop(0.5, `hsla(${b.hue}, ${b.sat}%, 45%, ${alpha * 0.4})`);
-        grd.addColorStop(1,   `hsla(${b.hue}, ${b.sat}%, 30%, 0)`);
+        const r = Math.max(b.rx, b.ry);
+        const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+        grd.addColorStop(0,    `hsla(${b.hue}, ${b.sat}%, 70%, ${alpha})`);
+        grd.addColorStop(0.4,  `hsla(${b.hue}, ${b.sat}%, 50%, ${alpha * 0.55})`);
+        grd.addColorStop(0.75, `hsla(${b.hue}, ${b.sat}%, 35%, ${alpha * 0.18})`);
+        grd.addColorStop(1,    `hsla(${b.hue}, ${b.sat}%, 20%, 0)`);
 
-        // On applique l'échelle pour rendre l'ellipse (sinon le gradient est rond)
         ctx.save();
-        ctx.translate(b.x, b.y);
+        ctx.translate(cx, cy);
         ctx.scale(1, b.ry / b.rx);
-        ctx.translate(-b.x, -b.y);
-
+        ctx.translate(-cx, -cy);
         ctx.beginPath();
-        ctx.arc(b.x, b.y, b.rx, 0, Math.PI * 2);
+        ctx.arc(cx, cy, b.rx, 0, Math.PI * 2);
         ctx.fillStyle = grd;
         ctx.fill();
         ctx.restore();
