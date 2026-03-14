@@ -244,16 +244,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     paymentTypeEl?.appendChild(opt);
   });
 
-  // ── Form submit (mock) ────────────────────────
+  // ── Form submit — TODO: add Discord Webhook URL ──
+  // const WEBHOOK = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+
   const form        = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
+  const submitBtn   = form?.querySelector('button[type="submit"]');
 
-  form?.addEventListener('submit', e => {
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
-    // TODO: Connect to a backend (e.g. Formspree, EmailJS)
+    // Webhook not configured yet — reach out on Discord directly.
+    formSuccess.textContent = '⚠️ Contact form coming soon. Please reach out on Discord directly.';
+    formSuccess.style.color = '#6aa8e0';
     formSuccess?.classList.add('visible');
-    form.reset();
-    setTimeout(() => formSuccess?.classList.remove('visible'), 5000);
+    setTimeout(() => formSuccess?.classList.remove('visible'), 6000);
   });
 
   // ── Animated stat counters ────────────────────
