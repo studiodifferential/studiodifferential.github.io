@@ -719,6 +719,28 @@ a   { text-decoration: none; color: inherit; }
 .vfx-videos--3col {
   grid-template-columns: repeat(3, 1fr);
 }
+.vfx-videos--4col {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Vidéo démo dans la section Work */
+.work-video {
+  max-width: 560px;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.work-video:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.70);
+}
 
 .vfx-video-card {
   display: flex;
@@ -1172,6 +1194,7 @@ a   { text-decoration: none; color: inherit; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .vfx-grid { grid-template-columns: repeat(2, 1fr); }
   .vfx-videos { grid-template-columns: repeat(2, 1fr); }
+  .work-video { max-width: 100%; }
 }
 
 @media (max-width: 680px) {
