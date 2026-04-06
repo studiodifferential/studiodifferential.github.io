@@ -213,19 +213,19 @@ a   { text-decoration: none; color: inherit; }
   background: #000000;
 }
 
-/* Grille de fond — lignes blanches très subtiles */
+/* Grille de fond — lignes bleutées subtiles */
 .hero__bg-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(80, 140, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 140, 255, 0.07) 1px, transparent 1px);
   background-size: 90px 90px;
   mask-image: radial-gradient(
-    ellipse 70% 65% at 50% 40%,
+    ellipse 80% 70% at 50% 40%,
     black 10%,
-    rgba(0,0,0,0.6) 40%,
-    rgba(0,0,0,0.2) 65%,
+    rgba(0,0,0,0.6) 45%,
+    rgba(0,0,0,0.2) 70%,
     transparent 100%
   );
   pointer-events: none;
@@ -237,16 +237,51 @@ a   { text-decoration: none; color: inherit; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1000px;
-  height: 800px;
+  width: 1400px;
+  height: 1100px;
   background: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    rgba(60, 120, 255, 0.09) 0%,
-    rgba(80, 140, 255, 0.04) 45%,
-    transparent 70%
+    ellipse 75% 65% at 50% 50%,
+    rgba(60, 130, 255, 0.22) 0%,
+    rgba(70, 150, 255, 0.13) 30%,
+    rgba(50, 110, 220, 0.07) 55%,
+    transparent 75%
   );
   pointer-events: none;
   z-index: 0;
+}
+
+/* Halos secondaires gauche et droite */
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero::before {
+  width: 600px;
+  height: 600px;
+  top: 20%;
+  left: -100px;
+  background: radial-gradient(
+    circle,
+    rgba(40, 100, 255, 0.10) 0%,
+    rgba(30,  80, 220, 0.05) 50%,
+    transparent 70%
+  );
+}
+.hero::after {
+  width: 600px;
+  height: 600px;
+  top: 20%;
+  right: -100px;
+  background: radial-gradient(
+    circle,
+    rgba(40, 100, 255, 0.10) 0%,
+    rgba(30,  80, 220, 0.05) 50%,
+    transparent 70%
+  );
 }
 
 /* Tout le contenu au-dessus du halo */
@@ -719,28 +754,6 @@ a   { text-decoration: none; color: inherit; }
 .vfx-videos--3col {
   grid-template-columns: repeat(3, 1fr);
 }
-.vfx-videos--4col {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-/* Vidéo démo dans la section Work */
-.work-video {
-  max-width: 560px;
-  margin: 0 auto 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border: 1px solid var(--border-accent);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--bg-card);
-  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
-}
-.work-video:hover {
-  border-color: var(--accent);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.70);
-}
 
 .vfx-video-card {
   display: flex;
@@ -1194,7 +1207,6 @@ a   { text-decoration: none; color: inherit; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .vfx-grid { grid-template-columns: repeat(2, 1fr); }
   .vfx-videos { grid-template-columns: repeat(2, 1fr); }
-  .work-video { max-width: 100%; }
 }
 
 @media (max-width: 680px) {
