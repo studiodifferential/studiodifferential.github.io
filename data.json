@@ -53,14 +53,6 @@
       "description": "Server-synchronized multiplayer pressure plate mechanic.",
       "tags": ["Multiplayer", "Mechanics", "Server"],
       "status": "completed"
-    },
-    {
-      "id": 6,
-      "title": "Upcoming Project",
-      "type": "Coming Soon",
-      "description": "New project coming soon.",
-      "tags": [],
-      "status": "coming_soon"
     }
   ],
   "services": [
