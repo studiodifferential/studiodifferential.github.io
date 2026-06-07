@@ -231,23 +231,31 @@ a   { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
-/* Halo bleuté centré — couvre tout le fond du hero */
+/* Halo central lumineux — cœur très brillant qui s'estompe vers 0 */
 .hero__glow {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1400px;
-  height: 1100px;
+  transform: translate(-50%, -52%);
+  width: 1600px;
+  height: 1400px;
   background: radial-gradient(
-    ellipse 75% 65% at 50% 50%,
-    rgba(60, 130, 255, 0.22) 0%,
-    rgba(70, 150, 255, 0.13) 30%,
-    rgba(50, 110, 220, 0.07) 55%,
-    transparent 75%
+    ellipse 55% 50% at 50% 50%,
+    rgba(160, 210, 255, 0.28)  0%,
+    rgba(100, 170, 255, 0.20)  12%,
+    rgba(70,  140, 255, 0.13)  28%,
+    rgba(50,  110, 230, 0.07)  48%,
+    rgba(30,   80, 200, 0.03)  65%,
+    transparent                 80%
   );
   pointer-events: none;
   z-index: 0;
+  animation: glow-pulse 5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%,  100% { opacity: 1;    transform: translate(-50%, -52%) scale(1);    }
+  50%        { opacity: 0.78; transform: translate(-50%, -52%) scale(1.06); }
 }
 
 /* Halos secondaires gauche et droite */
