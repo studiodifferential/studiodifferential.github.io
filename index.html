@@ -46,11 +46,31 @@
       <div class="hero__glow"></div>
 
       <div class="container hero__content">
-        <div class="hero__badge">
-          <div class="hero__badge-ring"></div>
+        <!-- ── COMMISSION STATUS ──────────────────────
+             Set AVAILABLE = true  → green "Available" badge
+             Set AVAILABLE = false → red  "Not available" badge
+        ─────────────────────────────────────────── -->
+        <script>
+          const AVAILABLE = true;
+        </script>
+
+        <div class="hero__badge hero__badge--available">
           <span class="hero__badge-dot"></span>
           Available for commissions
         </div>
+        <div class="hero__badge hero__badge--unavailable">
+          <span class="hero__badge-dot"></span>
+          Not available for commissions
+        </div>
+
+        <script>
+          (function() {
+            const a = document.querySelector('.hero__badge--available');
+            const b = document.querySelector('.hero__badge--unavailable');
+            if (AVAILABLE) { b.style.display = 'none'; }
+            else           { a.style.display = 'none'; }
+          })();
+        </script>
 
         <h1 class="hero__title">
           <span class="hero__title--dim">differential</span><span class="hero__title--bright"> studio</span>
@@ -102,7 +122,7 @@
           <div class="script-video-card">
             <div class="script-video-card__embed">
               <iframe
-                src="https://www.youtube.com/embed/MCletSibh0c"
+                src="https://www.youtube.com/embed/onOXC_Sd3IY"
                 title="Combat Framework"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -182,7 +202,7 @@
           <div class="vfx-video-card">
             <div class="vfx-video-card__embed">
               <iframe
-                src="https://www.youtube.com/embed/RbFdC86EMuE"
+                src="https://www.youtube.com/embed/PHoYunWywjI"
                 title="VFX Demo 1"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -194,7 +214,7 @@
           <div class="vfx-video-card">
             <div class="vfx-video-card__embed">
               <iframe
-                src="https://www.youtube.com/embed/mV3iVf3zbU0"
+                src="https://www.youtube.com/embed/jH_JCu9cO6I"
                 title="VFX Demo 2"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -206,7 +226,7 @@
           <div class="vfx-video-card">
             <div class="vfx-video-card__embed">
               <iframe
-                src="https://www.youtube.com/embed/_3A1DSeUMDk"
+                src="https://www.youtube.com/embed/1SvHCnzgr78"
                 title="VFX Demo 3"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -218,14 +238,14 @@
           <div class="vfx-video-card">
             <div class="vfx-video-card__embed">
               <iframe
-                src="https://www.youtube.com/embed/lC3BnYqjsf0"
+                src="https://www.youtube.com/embed/ifOUHGOIfx0"
                 title="VFX Demo 4"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
               </iframe>
             </div>
-            <p class="vfx-video-card__label">Aura — Solar</p>
+            <p class="vfx-video-card__label">VFX Demo — Effect 4</p>
           </div>
         </div>
 

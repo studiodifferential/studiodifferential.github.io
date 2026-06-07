@@ -292,24 +292,62 @@ a   { text-decoration: none; color: inherit; }
   }
 }
 
-/* Div ring inutilisé — caché */
-.hero__badge-ring { display: none; }
+/* Badge — Available (bleu) */
+.hero__badge--available {
+  color: var(--accent-dim);
+  border-color: rgba(168, 212, 255, 0.10);
+  animation: badge-glow 2.8s ease-in-out infinite;
+}
+.hero__badge--available .hero__badge-dot {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse-blue 2.2s ease-in-out infinite;
+}
 
-/* Point vert pulsant */
+@keyframes pulse-blue {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* Badge — Not available (rouge) */
+.hero__badge--unavailable {
+  color: #c05050;
+  border-color: rgba(255, 100, 100, 0.10);
+  animation: badge-glow-red 2.8s ease-in-out infinite;
+}
+.hero__badge--unavailable .hero__badge-dot {
+  background: #e05555;
+  box-shadow: 0 0 8px rgba(220, 60, 60, 0.8);
+  animation: pulse-red 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+@keyframes badge-glow-red {
+  0%, 100% {
+    border-color: rgba(200, 60, 60, 0.08);
+    box-shadow: none;
+  }
+  50% {
+    border-color: rgba(210, 60, 60, 0.75);
+    box-shadow:
+      0 0  6px rgba(210, 60,  60, 0.35),
+      0 0 16px rgba(190, 40,  40, 0.20),
+      0 0 32px rgba(160, 20,  20, 0.10),
+      inset 0 0 8px rgba(190, 40, 40, 0.06);
+  }
+}
+
+/* Point pulsant (base commune) */
 .hero__badge-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  animation: pulse 2.2s ease-in-out infinite;
   flex-shrink: 0;
   position: relative;
   z-index: 1;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1;   transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.75); }
 }
 
 /* ═══════════════════════════════════════════════
